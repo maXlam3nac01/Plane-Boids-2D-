@@ -11,11 +11,13 @@ private:
     unsigned int m_id;
 
 public:
-    // Constructor
-    Plane(const glm::vec2 position, const float speed, const float angle, const unsigned int id) { this->m_position = position, this->m_speed = speed, this->m_angle = angle, this->m_id = id; };
+    // Constructors
+    Plane() = default;
 
-    // Destructor
     ~Plane() = default;
+
+    Plane(const glm::vec2 position, const float speed, const float angle, const unsigned int id)
+        : m_position(position), m_speed(speed), m_angle(angle), m_id(id) {}
 
     // Getter and Setter
     inline glm::vec2    get_position() const { return this->m_position; };
@@ -29,15 +31,19 @@ public:
     inline void set_id(const unsigned int id) { this->m_id = id; };
 
     // Methods
-    void draw(p6::Context& ctx, float angle);
+    void draw(p6::Context& ctx, float angle_r, float plane_heigt, float plane_width_height_ratio, float plane_stroke);
 
     void move();
-    void turn(float direction);
 
-    void border(float Xmax, float Ymax);
     void no_border(float Xmax, float Ymax);
 
-    void separation(Plane plane, Plane otherPlane, const float& private_zone, const float& extented_private_zone, const float& separation_strength);
-    void alignment(Plane& plane, Plane& otherPlane);
-    void cohesion(Plane& plane, Plane& otherPlane);
+    void border(float Xmax, float Ymax, const float plane_height, const float plane_width_height_ratio);
+
+    void avoid_borders(float Xmax, float Ymax, float margin, float border_avoid_strength);
+
+    void separation(Plane otherPlane, const float& private_zone, const float& extented_private_zone, const float& separation_strength);
+
+    void cohesion(Plane& otherPlane, float cohesion_distance, float cohesion_strength);
+
+    void alignment(const Plane& otherPlane, float alignment_distance, float alignment_strength);
 };

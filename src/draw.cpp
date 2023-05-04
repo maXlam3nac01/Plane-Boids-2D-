@@ -5,11 +5,6 @@
 #include "glm/ext/scalar_constants.hpp"
 #include "glm/fwd.hpp"
 
-
-const float PLANE_HEIGHT             = 0.2f;
-const float PLANE_width_height_ratio = 0.85545753f; // = width / height
-const float PLANE_STROKE             = 0.003f;
-
 const std::vector<glm::vec2> PlanePoint = {
     {0.f, 1.f},
     {0.0690f, 0.9882f},
@@ -39,14 +34,14 @@ const std::vector<glm::vec2> PlanePoint = {
 
 };
 
-void Plane::draw(p6::Context& ctx, float angle)
+void Plane::draw(p6::Context& ctx, float angle, const float plane_heigt, const float plane_width_height_ratio, const float plane_stroke)
 {
     float x           = this->get_position()[0];
     float y           = this->get_position()[1];
-    float half_height = PLANE_HEIGHT / 2;
-    float half_width  = PLANE_width_height_ratio * PLANE_HEIGHT / 2;
+    float half_height = plane_heigt / 2;
+    float half_width  = plane_width_height_ratio * plane_heigt / 2;
 
-    ctx.stroke_weight = PLANE_STROKE;
+    ctx.stroke_weight = plane_stroke;
 
     for (size_t i = 0; i < PlanePoint.size() - 1; i++)
     {
